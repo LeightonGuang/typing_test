@@ -1,3 +1,29 @@
 *{
   margin: 0;
 }
+
+body{
+  text-align: center;
+}
+
+h1{
+  padding: 10px;
+  font-size: 40px;
+}
+
+#mainID{
+  text-align: center;
+  margin: 10px;
+}
+
+#typingID{
+  text-align: center;
+  width: min-content;
+  font-size: 25px;
+  /*border: none;*/
+  /*background-color: black;*/
+}
+
+#restartID{
+  cursor: pointer;
+}
