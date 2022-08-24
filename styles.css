@@ -16,13 +16,13 @@ h1{
   align-items: center;
   margin: 10px;
   height: 100vh;
+  font-size: 25px;
 }
 
 #typingID{
   text-align: center;
   width: min-content;
   align-items: center;
-  font-size: 25px;
   /*border: none;*/
   /*background-color: black;*/
 }
