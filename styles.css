@@ -34,7 +34,7 @@ h1{
   margin: 5px;
 }
 
-#typedDisplayID p{
+#typedDisplayID div{
   text-align: center;
   display: inline-block;
   width: 50vw;
