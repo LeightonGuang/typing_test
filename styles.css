@@ -1,9 +1,14 @@
+:root{
+  --font-size: 25px;
+}
+
 *{
   margin: 0;
+  font-size: var(--font-size);
 }
 
 body{
-  text-align: center;
+  display: grid;
 }
 
 h1{
@@ -15,16 +20,31 @@ h1{
   text-align: center;
   align-items: center;
   margin: 10px;
-  height: 100vh;
-  font-size: 25px;
+  height: 80vh;
+  
+}
+
+#typedDisplayID{
+  border: 2px solid black;
+  width: 50vw;
+  height: calc(var(--font-size) * 3.4);
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 5px;
+}
+
+#typedDisplayID p{
+  text-align: center;
+  display: inline-block;
+  width: 50vw;
+  height: 25px;
 }
 
 #typingID{
   text-align: center;
   width: min-content;
   align-items: center;
-  /*border: none;*/
-  /*background-color: black;*/
 }
 
 #restartID{

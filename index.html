@@ -12,12 +12,16 @@
     <h1 id="titleID">Typing test</h1>
 
     <div id="mainID">
-      <pre id="typedDisplayID">a b c d e f</pre>
+      <div id="typedDisplayID">
+        <p id="p1"> </p>
+        <p id="p2"> </p>
+        <p id="p3"> </p>
+      </div>
       <input type="text" id="typingID" />
-      <input type="button" id="restartID" value="restart" onclick="restart()"/>
+      <input type="button" id="restartID" value="restart" onclick="restart()" />
+      <input type="button" value="word" onclick="generateWords()" />
     </div>
 
     <script src="index.js"></script>
   </body>
 </html>
-
