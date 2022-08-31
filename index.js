@@ -18,15 +18,15 @@ let onArray;
 //array should only be words, add span element with function
 
 //stores whats generated
-let wordHistory = [];
+let wordsArray = [];
 
-let wordHistoryIndex = 0;
+let wordsArrayIndex = 0;
 
 //stores whats typed
-let typedHistory = [];
+let typedArray = [];
 
 //array user is working on
-let typedSubHistory = [];
+let typedSubArray = [];
 
 //=====================================================
 let typeField = document.querySelector("#typingID");
@@ -38,44 +38,62 @@ let p3 = document.querySelector("#p3");
 typeField.addEventListener("keydown", (e) => {
   //if spacebar is pressed
   if(e.code == "Space"){
-    onArray = wordHistory[wordHistory.length - 2];
-    console.log(onArray);
-    //removes the space in front
-    e.preventDefault();
-    typedSubHistory.push(typeField.value + " ");
-    replaceWord(onArray, typeField.value);
-    p2.innerHTML = onArray.join(" ");
-    typeField.value = "";
-    onIndex++;
+    //if there are words in type field when space is pressed
+    if(typeField.value != ""){
+      onArray = wordsArray[wordsArray.length - 2];
+      console.log(onArray);
+      //removes the space
+      e.preventDefault();
+      typedSubArray.push(typeField.value + " ");
+      replaceWord(onArray, typeField.value);
+      p2.innerHTML = onArray.join(" ");
+      typeField.value = "";
+      onIndex++;
+
+    //if there are no words
+    }else if (typeField.value == ""){
+      //removes the space
+      e.preventDefault();
+      typeField.value = "";
+      console.log("nothing typed");
+    }
+    
 
     //if reached the end of the array, reset index
-    if(wordHistory[wordHistory.length - 2].length == typedSubHistory.length){
+    if(wordsArray[wordsArray.length - 2].length == typedSubArray.length){
       generateWords();
-      console.log(typedSubHistory);
-      typedHistory.push(typedSubHistory);
-      typedSubHistory = [];
+      console.log(typedSubArray);
+      typedArray.push(typedSubArray);
+      typedSubArray = [];
       onIndex = 0;
-      wordHistoryIndex++;
+      wordsArrayIndex++;
     }
   }
 
   //*Fix* if backspace is pressed
   if(typeField.value == "" && e.code == "Backspace"){
-    console.log("backspace");
-    onIndex--;
-    wordHistory[wordHistoryIndex][onIndex] = extract(wordHistory[wordHistoryIndex][onIndex]);
-    //console.log(extract(typedSubHistory[onIndex]));
-    p2.innerHTML = onArray.join(" ");
-    typeField.value = typedSubHistory[typedSubHistory.length - 1];
-    console.log(typedSubHistory);
-    typedSubHistory.pop();
     
+    //go back to last array if back to front
     if(onIndex == 0){
-      wordHistoryIndex--;
-      //wordHistory.splice(wordHistory.length - 2, 1);
-      onIndex = wordHistory[wordHistory.length];
-      console.log(`number of array left ${wordHistory.length}`);
-      typedSubHistory = wordHistory[wordHistoryIndex];
+      wordsArrayIndex--;
+      //wordsArray.splice(wordsArray.length - 2, 1);
+      onIndex = wordsArray[wordsArray.length];
+      console.log(`number of array left ${wordsArray.length}`);
+      typedSubArray = wordsArray[wordsArrayIndex];
+
+    //if nothing left to delete
+    }else if(onIndex == 0 && typedArray.length == 0){
+      console.log("nothing left to delete");
+
+    
+    }else{
+      console.log("backspace when empty");
+      onIndex--;
+      wordsArray[wordsArrayIndex][onIndex] = extract(wordsArray[wordsArrayIndex][onIndex]);
+      p2.innerHTML = onArray.join(" ");
+      typeField.value = typedSubArray[typedSubArray.length - 1];
+      console.log(typedSubArray);
+      typedSubArray.pop();
     }
   }
 });
@@ -84,9 +102,9 @@ typeField.addEventListener("keydown", (e) => {
 
 function restart(){
   onIndex = 0;
-  wordHistory = [];
-  typedSubHistory = [];
-  typedHistory = [];
+  wordsArray = [];
+  typedSubArray = [];
+  typedArray = [];
   typeField.value = "";
   p1.innerHTML = " ";
   p2.innerHTML = " ";
@@ -126,9 +144,9 @@ function generateWords(){
   //remove last element and put to new <p>
   let temp = tempArr.pop();
   p3.innerHTML = tempArr.join(" ");
-  wordHistory.push(tempArr);
+  wordsArray.push(tempArr);
   tempArr = [temp];
-  console.log(`new words ${wordHistory[wordHistory.length - 1]}`);
+  console.log(`new words ${wordsArray[wordsArray.length - 1]}`);
 }
 
 //=====================================================
