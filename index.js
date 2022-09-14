@@ -12,7 +12,7 @@ let randomWords = [
   "could", 'may', "I", "said", "so", "people", "part"
 ];
 
-let onIndex = 0;
+let onTypedSubArrayIndex = 0;
 let onArray;
 
 //array should only be words, add span element with function
@@ -20,6 +20,7 @@ let onArray;
 //stores whats generated
 let wordsArray = [];
 
+//store which array index it's one
 let wordsArrayIndex = 0;
 
 //stores whats typed
@@ -40,59 +41,82 @@ typeField.addEventListener("keydown", (e) => {
   if(e.code == "Space"){
     //if there are words in type field when space is pressed
     if(typeField.value != ""){
-      onArray = wordsArray[wordsArray.length - 2];
-      console.log(onArray);
+      onArray = wordsArray[wordsArrayIndex];
+      console.log("space");
       //removes the space
       e.preventDefault();
       typedSubArray.push(typeField.value + " ");
       replaceWord(onArray, typeField.value);
+      console.log(`onTypedSubArrayIndex: ${onTypedSubArrayIndex} \ttypedArray length: ${typedArray.length} \ntypedSubArray: ${typedSubArray}`);
+      console.log(`wordsArrayIndex: ${wordsArrayIndex} \nonArray: ${onArray}`);
       p2.innerHTML = onArray.join(" ");
+      onTypedSubArrayIndex++;
       typeField.value = "";
-      onIndex++;
 
     //if there are no words
     }else if (typeField.value == ""){
       //removes the space
       e.preventDefault();
       typeField.value = "";
-      console.log("nothing typed");
+      console.log("nothing to delete");
     }
     
 
     //if reached the end of the array, reset index
-    if(wordsArray[wordsArray.length - 2].length == typedSubArray.length){
-      generateWords();
+    if(wordsArray[wordsArrayIndex].length == typedSubArray.length){
       console.log(typedSubArray);
       typedArray.push(typedSubArray);
       typedSubArray = [];
-      onIndex = 0;
+      onTypedSubArrayIndex = 0;
       wordsArrayIndex++;
+      //if there already words created before then skip generate
+      generateWords();
+      onArray = wordsArray[wordsArray.length - 2];
+      console.log("reaced the end of wordsArray");
     }
   }
 
   //*Fix* if backspace is pressed
   if(typeField.value == "" && e.code == "Backspace"){
     
-    //go back to last array if back to front
-    if(onIndex == 0){
-      wordsArrayIndex--;
-      //wordsArray.splice(wordsArray.length - 2, 1);
-      onIndex = wordsArray[wordsArray.length];
-      console.log(`number of array left ${wordsArray.length}`);
-      typedSubArray = wordsArray[wordsArrayIndex];
-
-    //if nothing left to delete
-    }else if(onIndex == 0 && typedArray.length == 0){
+    //if at the start of the array
+    if(onTypedSubArrayIndex == 0 && typedArray.length == 0){
       console.log("nothing left to delete");
-
     
+    //if it reached the front of typedsubArray but there are still arrays in front
+    }else if(onTypedSubArrayIndex == 0 && typedArray.length != 0){
+      wordsArrayIndex--;
+      onArray = wordsArray[wordsArrayIndex];
+      //if it reaches the top of the words array
+      console.log("scroll up");  
+      console.log("replace typedSubArray with the one before");
+      typedSubArray = typedArray[typedArray.length - 1];
+      console.log("remove array from typed Array");
+      typedArray.pop();
+      onTypedSubArrayIndex = typedSubArray.length - 1;
+      wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
+      
+      if((wordsArrayIndex - 1 < 0)){
+        p1.innerHTML = " ";
+      }else{
+        p1.innerHTML = wordsArray[wordsArrayIndex - 1].join(" ");
+      }
+      p2.innerHTML = wordsArray[wordsArrayIndex].join(" ");
+      p3.innerHTML = wordsArray[wordsArrayIndex + 1].join(" ");
+      console.log(`typedArray: ${typedArray} \ntypedSubArray: ${typedSubArray}`);
+      console.log(`onArray: ${onArray}`)
+      typeField.value = typedSubArray[typedSubArray.length - 1];
+      typedSubArray.pop();
+    
+    //going back 1 word
     }else{
-      console.log("backspace when empty");
-      onIndex--;
-      wordsArray[wordsArrayIndex][onIndex] = extract(wordsArray[wordsArrayIndex][onIndex]);
+      onTypedSubArrayIndex--;
+      console.log("remove color from words");
+      wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
       p2.innerHTML = onArray.join(" ");
       typeField.value = typedSubArray[typedSubArray.length - 1];
-      console.log(typedSubArray);
+      console.log(`typedSubArray: ${typedSubArray}`);
+      console.log(`onArray: ${onArray}`)
       typedSubArray.pop();
     }
   }
@@ -101,7 +125,7 @@ typeField.addEventListener("keydown", (e) => {
 //=====================================================
 
 function restart(){
-  onIndex = 0;
+  onTypedSubArrayIndex = 0;
   wordsArray = [];
   typedSubArray = [];
   typedArray = [];
@@ -133,6 +157,7 @@ function checkOverflow(el)
 
 function generateWords(){
   let tempArr = [];
+  console.log("scroll down");
   p1.innerHTML = p2.innerHTML;
   p2.innerHTML = p3.innerHTML;
   p3.innerHTML = "new";
@@ -146,22 +171,23 @@ function generateWords(){
   p3.innerHTML = tempArr.join(" ");
   wordsArray.push(tempArr);
   tempArr = [temp];
-  console.log(`new words ${wordsArray[wordsArray.length - 1]}`);
+  console.log(`new words generated: ${wordsArray[wordsArray.length - 1]}`);
 }
 
 //=====================================================
 
 function replaceWord(wordArray, typed){
-  if(wordArray[onIndex] == typed){
-    wordArray.splice(onIndex, 1, `<span style = "color: green">${wordArray[onIndex]}</span>`);
+  if(wordArray[onTypedSubArrayIndex] == typed){
+    console.log("replace word green");
+    wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: green">${wordArray[onTypedSubArrayIndex]}</span>`);
 
   }else{
-    wordArray.splice(onIndex, 1, `<span style = "color: red">${wordArray[onIndex]}</span>`);
+    console.log("replace word red");
+    wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: red">${wordArray[onTypedSubArrayIndex]}</span>`);
   }
 }
 
 //=====================================================
-
 
 function extract(str){
   let middle = str.slice(
@@ -177,3 +203,7 @@ function start(){
 }
 
 start();
+
+function addSpan(){
+  console.log(`wordsArrayIndex: ${wordsArrayIndex} \t onTypedSubArrayIndex: ${onTypedSubArrayIndex}\n onArray: ${onArray}`);
+}
