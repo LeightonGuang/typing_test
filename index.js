@@ -70,7 +70,13 @@ typeField.addEventListener("keydown", (e) => {
       onTypedSubArrayIndex = 0;
       wordsArrayIndex++;
       //if there already words created before then skip generate
-      generateWords();
+      if(wordsArrayIndex == wordsArray.length - 1){
+        generateWords();
+      }else{
+        p1.innerHTML = wordsArray[wordsArrayIndex - 1].join(" ");
+        p2.innerHTML = wordsArray[wordsArrayIndex].join(" ");
+        p3.innerHTML = wordsArray[wordsArrayIndex + 1].join(" ");
+      }
       onArray = wordsArray[wordsArray.length - 2];
       console.log("reaced the end of wordsArray");
     }
