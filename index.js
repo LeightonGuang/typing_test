@@ -141,6 +141,7 @@ function restart(){
   p2.innerHTML = " ";
   p3.innerHTML = " ";
   start();
+  typeField.focus();
 }
 
 //=====================================================
