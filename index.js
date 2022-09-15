@@ -127,6 +127,7 @@ typeField.addEventListener("keydown", (e) => {
 function restart(){
   onTypedSubArrayIndex = 0;
   wordsArray = [];
+  wordsArrayIndex = 0;
   typedSubArray = [];
   typedArray = [];
   typeField.value = "";
