@@ -12,6 +12,8 @@ let randomWords = [
   "could", 'may', "I", "said", "so", "people", "part"
 ];
 
+let numLetters = 0;
+
 let onTypedSubArrayIndex = 0;
 let onArray;
 
@@ -35,6 +37,10 @@ let typedDisplay = document.querySelector("#typedDisplayID");
 let p1 = document.querySelector("#p1");
 let p2 = document.querySelector("#p2");
 let p3 = document.querySelector("#p3");
+let letters = document.querySelector("#letters");
+
+//focus on textbox when site loads
+typeField.focus();
 
 typeField.addEventListener("keydown", (e) => {
   //if spacebar is pressed
@@ -101,7 +107,11 @@ typeField.addEventListener("keydown", (e) => {
       typedArray.pop();
       onTypedSubArrayIndex = typedSubArray.length - 1;
       wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
-      
+      //removing the space at the end
+      if(wordsArray[wordsArrayIndex][onTypedSubArrayIndex] == typedSubArray[onTypedSubArrayIndex].slice(0, -1)){
+        numLetters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
+      }
+        
       if((wordsArrayIndex - 1 < 0)){
         p1.innerHTML = " ";
       }else{
@@ -119,6 +129,10 @@ typeField.addEventListener("keydown", (e) => {
       onTypedSubArrayIndex--;
       console.log("remove color from words");
       wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
+      //removing the space at the end
+      if(wordsArray[wordsArrayIndex][onTypedSubArrayIndex] == typedSubArray[onTypedSubArrayIndex].slice(0, -1)){
+        numLetters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
+      }
       p2.innerHTML = onArray.join(" ");
       typeField.value = typedSubArray[typedSubArray.length - 1];
       console.log(`typedSubArray: ${typedSubArray}`);
@@ -126,11 +140,14 @@ typeField.addEventListener("keydown", (e) => {
       typedSubArray.pop();
     }
   }
+  letters.innerHTML = numLetters / 5;
 });
 
 //=====================================================
 
 function restart(){
+  numLetters = 0;
+  letters.innerHTML = numLetters;
   onTypedSubArrayIndex = 0;
   wordsArray = [];
   wordsArrayIndex = 0;
@@ -186,6 +203,7 @@ function generateWords(){
 
 function replaceWord(wordArray, typed){
   if(wordArray[onTypedSubArrayIndex] == typed){
+    numLetters += wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
     console.log("replace word green");
     wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: green">${wordArray[onTypedSubArrayIndex]}</span>`);
 
