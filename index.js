@@ -12,7 +12,9 @@ let randomWords = [
   "could", 'may', "I", "said", "so", "people", "part"
 ];
 
-let numLetters = 0;
+let letters = 0;
+let wrongWords = 0;
+let time = 1;
 
 let onTypedSubArrayIndex = 0;
 let onArray;
@@ -37,7 +39,8 @@ let typedDisplay = document.querySelector("#typedDisplayID");
 let p1 = document.querySelector("#p1");
 let p2 = document.querySelector("#p2");
 let p3 = document.querySelector("#p3");
-let letters = document.querySelector("#letters");
+let wpm = document.querySelector("#wpm");
+let numWrongWords = document.querySelector("#wrongWords");
 
 //focus on textbox when site loads
 typeField.focus();
@@ -109,7 +112,7 @@ typeField.addEventListener("keydown", (e) => {
       wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
       //removing the space at the end
       if(wordsArray[wordsArrayIndex][onTypedSubArrayIndex] == typedSubArray[onTypedSubArrayIndex].slice(0, -1)){
-        numLetters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
+        letters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
       }
         
       if((wordsArrayIndex - 1 < 0)){
@@ -131,7 +134,7 @@ typeField.addEventListener("keydown", (e) => {
       wordsArray[wordsArrayIndex][onTypedSubArrayIndex] = extract(wordsArray[wordsArrayIndex][onTypedSubArrayIndex]);
       //removing the space at the end
       if(wordsArray[wordsArrayIndex][onTypedSubArrayIndex] == typedSubArray[onTypedSubArrayIndex].slice(0, -1)){
-        numLetters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
+        letters -= wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
       }
       p2.innerHTML = onArray.join(" ");
       typeField.value = typedSubArray[typedSubArray.length - 1];
@@ -140,14 +143,16 @@ typeField.addEventListener("keydown", (e) => {
       typedSubArray.pop();
     }
   }
-  letters.innerHTML = numLetters / 5;
+  wpm.innerHTML = letters / 5 * time;
+  numWrongWords.innerHTML = wrongWords;
 });
 
 //=====================================================
 
 function restart(){
-  numLetters = 0;
-  letters.innerHTML = numLetters;
+  letters = 0;
+  numWrongWords.innerHTML = 0;
+  wpm.innerHTML = letters;
   onTypedSubArrayIndex = 0;
   wordsArray = [];
   wordsArrayIndex = 0;
@@ -203,11 +208,12 @@ function generateWords(){
 
 function replaceWord(wordArray, typed){
   if(wordArray[onTypedSubArrayIndex] == typed){
-    numLetters += wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
+    letters += wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
     console.log("replace word green");
     wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: green">${wordArray[onTypedSubArrayIndex]}</span>`);
 
   }else{
+    wrongWords++;
     console.log("replace word red");
     wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: red">${wordArray[onTypedSubArrayIndex]}</span>`);
   }
@@ -220,6 +226,17 @@ function extract(str){
     str.indexOf(">") + 1,
     str.lastIndexOf("<"),
   );
+
+  let colour = str.slice(
+    str.indexOf(":") + 1,
+    str.lastIndexOf('"'),
+  );
+  if(colour == "green"){
+
+
+  }else if(colour == " red"){
+    wrongWords--;
+  }
   return middle;
 }
 
@@ -230,6 +247,6 @@ function start(){
 
 start();
 
-function addSpan(){
-  console.log(`wordsArrayIndex: ${wordsArrayIndex} \t onTypedSubArrayIndex: ${onTypedSubArrayIndex}\n onArray: ${onArray}`);
+function showVar(){
+  console.log(`wordsArrayIndex: ${wordsArrayIndex} \t onTypedSubArrayIndex: ${onTypedSubArrayIndex} \t letters: ${letters} \t wrongWords: ${wrongWords} \n onArray: ${onArray}`);
 }

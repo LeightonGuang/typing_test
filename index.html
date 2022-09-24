@@ -21,8 +21,17 @@
       <input type="text" id="typingID" />
       <input type="button" id="restartID" value="restart" onclick="restart()" />
       <input type="button" value="word" onclick="generateWords()" />
-      <input type="button" value="span" onclick="addSpan()" />
-      <p id="letters">0</p>
+      <input type="button" value="showVar" onclick="showVar()" />
+
+      <div>
+        wpm: 
+        <p id="wpm">0</p>
+      </div>
+
+      <div>
+        wrong words:
+        <p id="wrongWords">0</p>
+      </div>
     </div>
 
     <script src="index.js"></script>
