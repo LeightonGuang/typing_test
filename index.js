@@ -12,9 +12,11 @@ let randomWords = [
   "could", 'may', "I", "said", "so", "people", "part"
 ];
 
+let startTime = false;
+
 let letters = 0;
 let wrongWords = 0;
-let time = 1;
+let seconds = 61;
 
 let onTypedSubArrayIndex = 0;
 let onArray;
@@ -41,6 +43,7 @@ let p2 = document.querySelector("#p2");
 let p3 = document.querySelector("#p3");
 let wpm = document.querySelector("#wpm");
 let numWrongWords = document.querySelector("#wrongWords");
+let timer = document.querySelector("#timer");
 
 //focus on textbox when site loads
 typeField.focus();
@@ -143,15 +146,24 @@ typeField.addEventListener("keydown", (e) => {
       typedSubArray.pop();
     }
   }
-  wpm.innerHTML = letters / 5 * time;
+  if(typedArray.length > 0 || typedSubArray.length > 0 || typeField.value != ""){
+    startTime = true;
+    console.log("time start");
+  }
+  wpm.innerHTML = (letters / 5 / ((60 - seconds)/60)).toFixed(2);
   numWrongWords.innerHTML = wrongWords;
 });
 
 //=====================================================
 
 function restart(){
+  typeField.removeAttribute("disabled");
   letters = 0;
-  numWrongWords.innerHTML = 0;
+  startTime = false;
+  timer.innerHTML = 60;
+  seconds = 61;
+  wrongWords = 0;
+  numWrongWords.innerHTML = wrongWords;
   wpm.innerHTML = letters;
   onTypedSubArrayIndex = 0;
   wordsArray = [];
@@ -239,6 +251,23 @@ function extract(str){
   }
   return middle;
 }
+
+//=====================================================
+
+function getTime(){
+  if(startTime){
+    seconds--;
+    timer.innerHTML = seconds;
+    if (seconds == 0){
+      startTime = false;
+      typeField.value = "times up!";
+      typeField.disabled = true;
+    }
+  }
+}
+setInterval(getTime, 1000);
+
+//=====================================================
 
 function start(){
   generateWords();
