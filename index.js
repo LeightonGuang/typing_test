@@ -148,7 +148,6 @@ typeField.addEventListener("keydown", (e) => {
   }
   if(typedArray.length > 0 || typedSubArray.length > 0 || typeField.value != ""){
     startTime = true;
-    console.log("time start");
   }
   wpm.innerHTML = (letters / 5 / ((60 - seconds)/60)).toFixed(2);
   numWrongWords.innerHTML = wrongWords;
@@ -205,6 +204,10 @@ function generateWords(){
   p3.innerHTML = "new";
   while(checkOverflow(typedDisplay) == false){
     let randomIndex = Math.floor(Math.random() * randomWords.length);
+    //if there are two same words in a row
+    while(tempArr[tempArr.length - 1] == randomWords[randomIndex]){
+      randomIndex = Math.floor(Math.random() * randomWords.length);
+    }
     tempArr.push(randomWords[randomIndex]);
     p3.innerHTML = tempArr.join(" ");
   }
