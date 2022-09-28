@@ -9,34 +9,44 @@
   </head>
 
   <body>
-    <h1 id="titleID">Typing test</h1>
+    <section id="layout">
+      <h1 id="titleID">Typing test</h1>
 
-    <div id="mainID">
-      <div id="typedDisplayID">
-        <div id="p1"> </div>
-        <div id="p2"> </div>
-        <div id="p3"> </div>
-      </div>
+      <section id="container_ID">
+        <div id="wordsID">
+          <div id="p1"> </div>
+          <div id="p2"> </div>
+          <div id="p3"> </div>
+        </div>
 
-      <input type="text" id="typingID" />
-      <input type="button" id="restartID" value="restart" onclick="restart()" />
-      <input type="button" value="showVar" onclick="showVar()" />
+        <section id="stats">
+          <div id="timer_div" class="stat_block">
+            time: 
+            <p id="timer">60</p>
+          </div>
 
-      <div>
-        wpm: 
-        <p id="wpm">0</p>
-      </div>
+          <div id="wpm_div" class="stat_block">
+            wpm: 
+            <p id="wpm">0</p>
+          </div>
 
-      <div>
-        wrong words:
-        <p id="wrongWords">0</p>
-      </div>
+          <div id="wrongWords_div" class="stat_block">
+            wrong words: 
+            <p id="wrongWords">0</p>
+          </div>
+        </section>
 
-      <div>
-        time:
-        <p id="timer">60</p>
-      </div>
-    </div>
+        <section id="row2">
+          <input type="text" id="typingID" />
+          <input
+            type="button"
+            id="restartID"
+            value="restart"
+            onclick="restart()"
+          />
+        </section>
+      </section>
+    </section>
 
     <script src="index.js"></script>
   </body>

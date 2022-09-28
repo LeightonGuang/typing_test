@@ -37,7 +37,7 @@ let typedSubArray = [];
 
 //=====================================================
 let typeField = document.querySelector("#typingID");
-let typedDisplay = document.querySelector("#typedDisplayID");
+let typedDisplay = document.querySelector("#wordsID");
 let p1 = document.querySelector("#p1");
 let p2 = document.querySelector("#p2");
 let p3 = document.querySelector("#p3");
@@ -225,7 +225,7 @@ function replaceWord(wordArray, typed){
   if(wordArray[onTypedSubArrayIndex] == typed){
     letters += wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
     console.log("replace word green");
-    wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: green">${wordArray[onTypedSubArrayIndex]}</span>`);
+    wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: rgb(71, 255, 65)">${wordArray[onTypedSubArrayIndex]}</span>`);
 
   }else{
     wrongWords++;
