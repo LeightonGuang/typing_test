@@ -2,6 +2,7 @@
 
 :root{
   --word-size: 25px;
+  --other-size: 20px;
 }
 
 *{
@@ -10,14 +11,15 @@
 }
 
 body{
-  display: grid;
   background-color: rgb(17, 17, 17);
   color: white;
 }
 
 #layout{
-  display: grid;
-  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
 }
 
 h1{
@@ -37,7 +39,6 @@ h1{
 }
 
 #wordsID{
-  border: 2px solid black;
   width: 50vw;
   height: calc(var(--word-size) * 3.4);
   word-wrap: break-word;
@@ -65,12 +66,18 @@ h1{
 }
 
 .stat_block{
+  font-size: var(--other-size);
   justify-content: center;
+  padding: 2px;
   display: flex;
   color: white;
   width: 33%;
   height: min-content;
   border-radius: 4px;
+}
+
+.stat_block p{
+  font-size: var(--other-size);
 }
 
 #row2{
@@ -79,6 +86,8 @@ h1{
 
 #typingID{
   text-align: center;
+  border: none;
+  border-radius: 3px;
   width: min-content;
   align-items: center;
 }
@@ -93,11 +102,8 @@ h1{
   width: min-content;
 }
 
-
-
 #wpm_div{
   background-color: rgb(182, 33, 255);
-  
 }
 
 #wrongWords_div{
@@ -106,14 +112,5 @@ h1{
 
 #timer_div{
   background-color: rgb(207, 216, 35);
-}
-
-#test_div{
-  background-color: rgb(41, 41, 41);
-  margin: 10px;
-  height: 40px;
-}
-
-#test{
-  color: rgb(71, 255, 65);
+  color: rgb(41, 41, 41);
 }
