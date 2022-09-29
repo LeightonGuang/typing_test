@@ -18,6 +18,8 @@ let letters = 0;
 let wrongWords = 0;
 let seconds = 61;
 
+let wpm_calc;
+
 let onTypedSubArrayIndex = 0;
 let onArray;
 
@@ -149,7 +151,17 @@ typeField.addEventListener("keydown", (e) => {
   if(typedArray.length > 0 || typedSubArray.length > 0 || typeField.value != ""){
     startTime = true;
   }
-  wpm.innerHTML = (letters / 5 / ((60 - seconds)/60)).toFixed(2);
+
+  wpm_calc = parseFloat(letters / 5 / ((60 - seconds)/60));
+  
+  //if its negative ir infinity number
+  if(wpm_calc <= 0 || !(isFinite(wpm_calc))){
+    wpm.innerHTML = (0).toFixed(2);
+  
+  }else{
+    console.log("not infinity: " + wpm_calc);
+    wpm.innerHTML = wpm_calc.toFixed(2);
+  }
   numWrongWords.innerHTML = wrongWords;
 });
 
@@ -163,7 +175,7 @@ function restart(){
   seconds = 61;
   wrongWords = 0;
   numWrongWords.innerHTML = wrongWords;
-  wpm.innerHTML = letters;
+  wpm.innerHTML = (0).toFixed(2);
   onTypedSubArrayIndex = 0;
   wordsArray = [];
   wordsArrayIndex = 0;
