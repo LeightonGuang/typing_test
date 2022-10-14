@@ -17,6 +17,7 @@ let startTime = false;
 let letters = 0;
 let wrongWords = 0;
 let seconds = 61;
+let calc_seconds = 60;
 
 let wpm_calc;
 
@@ -152,7 +153,8 @@ typeField.addEventListener("keydown", (e) => {
     startTime = true;
   }
 
-  wpm_calc = parseFloat(letters / 5 / ((60 - seconds)/60));
+  
+  wpm_calc = parseFloat(letters / 5 / ((calc_seconds - seconds) / 60)); 
   
   //if its negative ir infinity number
   if(wpm_calc <= 0 || !(isFinite(wpm_calc))){
@@ -171,8 +173,8 @@ function restart(){
   typeField.removeAttribute("disabled");
   letters = 0;
   startTime = false;
-  timer.innerHTML = 60;
-  seconds = 61;
+  timer.innerHTML = calc_seconds;
+  seconds = calc_seconds + 1;
   wrongWords = 0;
   numWrongWords.innerHTML = wrongWords;
   wpm.innerHTML = (0).toFixed(2);
@@ -281,6 +283,29 @@ function getTime(){
   }
 }
 setInterval(getTime, 1000);
+
+//=====================================================
+
+function ten_sec(){
+  seconds = 11;
+  calc_seconds = 10;
+  timer.innerHTML = 10;
+  restart();
+}
+
+function thirty_sec(){
+  seconds = 31;
+  calc_seconds = 30;
+  timer.innerHTML = 30;
+  restart();
+}
+
+function sixty_sec(){
+  seconds = 61;
+  calc_seconds = 60;
+  timer.innerHTML = 60;
+  restart();
+}
 
 //=====================================================
 
