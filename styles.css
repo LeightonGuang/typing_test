@@ -29,6 +29,22 @@ h1{
   font-size: 40px;
 }
 
+#duration{
+  font-family: 'Noto Sans Mono', monospace;
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+  margin: 15px;
+}
+
+.duration_button{
+  border: none;
+  color: rgb(100, 100, 100);
+  background-color: rgb(41, 41, 41);
+  font-size: 15px;
+  border-radius: 3px;
+}
+
 #container_ID{
   display: grid;
   grid-template-rows: repeat(3, auto);
