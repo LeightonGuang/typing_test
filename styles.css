@@ -66,13 +66,6 @@ h1{
   border-radius: 3px;
 }
 
-#wordsID div{
-  text-align: center;
-  display: inline-block;
-  width: 50vw;
-  height: 25px;
-}
-
 #stats{
   font-family: 'Noto Sans Mono', monospace;
   display: flex;
