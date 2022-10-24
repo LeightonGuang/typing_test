@@ -15,6 +15,7 @@ let randomWords = [
 let startTime = false;
 
 let letters = 0;
+let letter_penalty = 0;
 let wrongWords = 0;
 let seconds = 61;
 let calc_seconds = 60;
@@ -154,7 +155,7 @@ typeField.addEventListener("keydown", (e) => {
   }
 
   
-  wpm_calc = parseFloat(letters / 5 / ((calc_seconds - seconds) / 60)); 
+  wpm_calc = parseFloat((letters - letter_penalty) / 5 / ((calc_seconds - seconds) / 60)); 
   
   //if its negative ir infinity number
   if(wpm_calc <= 0 || !(isFinite(wpm_calc))){
@@ -172,6 +173,7 @@ typeField.addEventListener("keydown", (e) => {
 function restart(){
   typeField.removeAttribute("disabled");
   letters = 0;
+  letter_penalty = 0;
   startTime = false;
   timer.innerHTML = calc_seconds;
   seconds = calc_seconds + 1;
@@ -243,6 +245,8 @@ function replaceWord(wordArray, typed){
 
   }else{
     wrongWords++;
+    letter_penalty += wordArray[onTypedSubArrayIndex].length;
+    console.log(`letter penalty: ${letter_penalty}`);
     console.log("replace word red");
     wordArray.splice(onTypedSubArrayIndex, 1, `<span style = "color: red">${wordArray[onTypedSubArrayIndex]}</span>`);
   }
@@ -260,11 +264,10 @@ function extract(str){
     str.indexOf(":") + 1,
     str.lastIndexOf('"'),
   );
-  if(colour == "green"){
-
-
-  }else if(colour == " red"){
+  
+  if(colour == " red"){
     wrongWords--;
+    letter_penalty -= middle.length;
   }
   return middle;
 }
