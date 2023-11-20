@@ -143,7 +143,7 @@ typeField.focus();
 
 typeField.addEventListener("keydown", (e) => {
   //if spacebar is pressed
-  if (e.code == "Space") {
+  if (e.code === "Space") {
     //if there are words in type field when space is pressed
     if (typeField.value != "") {
       onArray = wordsArray[wordsArrayIndex];
@@ -161,7 +161,7 @@ typeField.addEventListener("keydown", (e) => {
       typeField.value = "";
 
       //if there are no words
-    } else if (typeField.value == "") {
+    } else if (typeField.value === "") {
       //removes the space
       e.preventDefault();
       typeField.value = "";
@@ -169,14 +169,14 @@ typeField.addEventListener("keydown", (e) => {
     }
 
     //if reached the end of the array, reset index
-    if (wordsArray[wordsArrayIndex].length == typedSubArray.length) {
+    if (wordsArray[wordsArrayIndex].length === typedSubArray.length) {
       console.log(typedSubArray);
       typedArray.push(typedSubArray);
       typedSubArray = [];
       onTypedSubArrayIndex = 0;
       wordsArrayIndex++;
       //if there already words created before then skip generate
-      if (wordsArrayIndex == wordsArray.length - 1) {
+      if (wordsArrayIndex === wordsArray.length - 1) {
         generateWords();
       } else {
         p1.innerHTML = wordsArray[wordsArrayIndex - 1].join(" ");
@@ -189,13 +189,13 @@ typeField.addEventListener("keydown", (e) => {
   }
 
   //*Fix* if backspace is pressed
-  if (typeField.value == "" && e.code == "Backspace") {
+  if (typeField.value === "" && e.code === "Backspace") {
     //if at the start of the array
-    if (onTypedSubArrayIndex == 0 && typedArray.length == 0) {
+    if (onTypedSubArrayIndex === 0 && typedArray.length === 0) {
       console.log("nothing left to delete");
 
       //if it reached the front of typedsubArray but there are still arrays in front
-    } else if (onTypedSubArrayIndex == 0 && typedArray.length != 0) {
+    } else if (onTypedSubArrayIndex === 0 && typedArray.length != 0) {
       wordsArrayIndex--;
       onArray = wordsArray[wordsArrayIndex];
       //if it reaches the top of the words array
@@ -321,10 +321,10 @@ function generateWords() {
   p1.innerHTML = p2.innerHTML;
   p2.innerHTML = p3.innerHTML;
   p3.innerHTML = "new";
-  while (checkOverflow(typedDisplay) == false) {
+  while (checkOverflow(typedDisplay) === false) {
     let randomIndex = Math.floor(Math.random() * randomWords.length);
     //if there are two same words in a row
-    while (tempArr[tempArr.length - 1] == randomWords[randomIndex]) {
+    while (tempArr[tempArr.length - 1] === randomWords[randomIndex]) {
       randomIndex = Math.floor(Math.random() * randomWords.length);
     }
     tempArr.push(randomWords[randomIndex]);
@@ -341,7 +341,7 @@ function generateWords() {
 //=====================================================
 
 function replaceWord(wordArray, typed) {
-  if (wordArray[onTypedSubArrayIndex] == typed) {
+  if (wordArray[onTypedSubArrayIndex] === typed) {
     letters += wordsArray[wordsArrayIndex][onTypedSubArrayIndex].length;
     console.log("replace word green");
     wordArray.splice(
@@ -369,7 +369,7 @@ function extract(str) {
 
   let colour = str.slice(str.indexOf(":") + 1, str.lastIndexOf('"'));
 
-  if (colour == " red") {
+  if (colour === " red") {
     wrongWords--;
     letter_penalty -= middle.length;
   }
@@ -382,7 +382,7 @@ function getTime() {
   if (startTime) {
     seconds--;
     timer.innerHTML = seconds;
-    if (seconds == 0) {
+    if (seconds === 0) {
       startTime = false;
       typeField.value = "times up!";
       typeField.disabled = true;
